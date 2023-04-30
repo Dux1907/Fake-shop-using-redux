@@ -19,7 +19,7 @@ const ProductListing = () => {
       }
     }
     data();
-  }, [dispatch]);
+  }, []);
   console.log(products);
   // console.log(products + " kartik");
   return (
