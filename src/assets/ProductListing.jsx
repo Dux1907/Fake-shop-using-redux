@@ -2,39 +2,29 @@
 import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setProduct } from "./action";
+import { fetchAllProducts} from "./action";
 import { Link } from "react-router-dom";
 const ProductListing = () => {
   const products = useSelector((state) => state.allProducts.product);
   const dispatch = useDispatch();
   useEffect(() => {
-    async function data() {
-      try {
-        let a = await fetch("https://fakestoreapi.com/products");
-        let b = await a.json();
-        dispatch(setProduct(b));
-        //     console.log(b)
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    data();
+    dispatch(fetchAllProducts())
   }, []);
   console.log(products);
   // console.log(products + " kartik");
   return (
     <div className="container-fluid">
-      <div className="row text-center gap-5 justify-content-center">
+      <div className="row text-center gap-5 justify-content-center" >
         {products.map((user) => {
           const { id, title, price, description, category, image } = user;
           const rating = user.rating.rate;
           return (
-            <div className="col-lg-3 col-md-4 col-sm-7 col-10 border border-1 ">
+            <div style = {{boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}} className="col-lg-3 col-md-4 col-sm-7 col-10 border border-1 " >
               <Link to={`/product/${id}`}>
                 <div className="img-fluid m-2">
                   <img
                     className="img-fluid"
-                    style={{ height: "300px" }}
+                    style={{ height: "200px" }}
                     src={image}
                   />
                 </div>

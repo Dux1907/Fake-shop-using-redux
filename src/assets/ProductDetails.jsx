@@ -1,31 +1,20 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectedProducts, removeProduct } from "./action";
+import { removeProduct, fetchProduct } from "./action";
 
 const ProductDetails = () => {
   const products = useSelector((state) => state.allSelectedProducts);
   const { productId } = useParams();
   const { title, price, description, category, image } = products;
-  
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (productId && productId != "") data();
+    if (productId && productId != "") dispatch(fetchProduct(productId));
     return () => {
       dispatch(removeProduct());
     };
   }, [productId]);
-  const data = async () => {
-    try {
-      let a = await fetch(`https://fakestoreapi.com/products/${productId}`);
-      let b = await a.json();
-      dispatch(selectedProducts(b));
-      console.log(b);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <>
@@ -49,7 +38,7 @@ const ProductDetails = () => {
                 <div className="category m-2">
                   <span className="fw-bold">Category: </span> {category}
                 </div>
-               
+
                 <div className="price m-2">
                   <span className="fw-bold">Price: </span> ${price}
                 </div>
